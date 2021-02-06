@@ -1,0 +1,67 @@
+html {
+  font-size: 100%;
+}
+body {
+  font-size: calc(1em + 0.5vw);
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+main {
+  background: hsla(203, 97%, 88%, 1);
+  background: linear-gradient(
+    45deg,
+    hsla(203, 97%, 88%, 1) 0%,
+    hsla(160, 90%, 75%, 1) 100%
+  );
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.calculator {
+  flex: 0 1 17em;
+  min-height: 25em;
+  background: rgba(255, 255, 255, 0.5);
+  background: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.4) 100%
+  );
+  border-radius: 1.5em;
+  z-index: 2;
+  backdrop-filter: blur(1em);
+}
+.circle {
+  background: rgba(255, 255, 255, 0.5);
+  background: linear-gradient(
+    45deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    rgba(255, 255, 255, 0.3) 100%
+  );
+  position: absolute;
+  min-width: 10em;
+  min-height: 10em;
+  border-radius: 50%;
+}
+.circle1 {
+  top: -15%;
+  left: -5%;
+}
+.circle2 {
+  top: -10%;
+  left: 55%;
+}
+.circle3 {
+  top: 30%;
+  left: 25%;
+}
+.circle4 {
+  top: 80%;
+  left: 60%;
+}
