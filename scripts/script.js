@@ -33,3 +33,108 @@ const operate = function performOperation(num1, operator, num2) {
   }
   return result;
 };
+
+const numberInput = document.querySelector('input');
+let currentValue = numberInput.value;
+
+const updateInput = function updateNumberInput(newValue) {
+  currentValue = currentValue !== '0' ? currentValue + newValue : newValue;
+  numberInput.value = currentValue;
+};
+
+const buttonsArray = [
+  {
+    dataValue: '0',
+    action() {
+      updateInput(this.dataValue);
+    },
+  },
+  {
+    dataValue: '1',
+    action() {
+      updateInput(this.dataValue);
+    },
+  },
+  {
+    dataValue: '2',
+    action() {
+      updateInput(this.dataValue);
+    },
+  },
+  {
+    dataValue: '3',
+    action() {
+      updateInput(this.dataValue);
+    },
+  },
+  {
+    dataValue: '4',
+    action() {
+      updateInput(this.dataValue);
+    },
+  },
+  {
+    dataValue: '5',
+    action() {
+      updateInput(this.dataValue);
+    },
+  },
+  {
+    dataValue: '6',
+    action() {
+      updateInput(this.dataValue);
+    },
+  },
+  {
+    dataValue: '7',
+    action() {
+      updateInput(this.dataValue);
+    },
+  },
+  {
+    dataValue: '8',
+    action() {
+      updateInput(this.dataValue);
+    },
+  },
+  {
+    dataValue: '9',
+    action() {
+      updateInput(this.dataValue);
+    },
+  },
+  {
+    dataValue: '.',
+  },
+  {
+    dataValue: '+',
+  },
+  {
+    dataValue: '-',
+  },
+  {
+    dataValue: '÷',
+  },
+  {
+    dataValue: '*',
+  },
+  {
+    dataValue: '/',
+  },
+  {
+    dataValue: '+/-',
+  },
+  {
+    dataValue: 'clear',
+  },
+];
+
+document.querySelectorAll('button').forEach((btn) =>
+  btn.addEventListener('click', (e) => {
+    buttonsArray.forEach((button) => {
+      if (button.dataValue === e.target.dataset.value) {
+        button.action();
+      }
+    });
+  })
+);
