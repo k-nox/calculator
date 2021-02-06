@@ -3,6 +3,7 @@ html {
 }
 body {
   font-size: calc(1em + 0.5vw);
+  font-family: 'JetBrains Mono', 'Courier New', Courier, monospace;
 }
 * {
   margin: 0;
@@ -31,18 +32,80 @@ main {
   background: linear-gradient(
     45deg,
     rgba(255, 255, 255, 0.1) 0%,
-    rgba(255, 255, 255, 0.4) 100%
+    rgba(255, 255, 255, 0.7) 100%
   );
   border-radius: 1.5em;
   z-index: 2;
   backdrop-filter: blur(1em);
+  display: grid;
+  grid:
+    'input input input input' 25%
+    'clear clear sign divide' 1fr
+    'seven eight nine multiply' 1fr
+    'four five six minus' 1fr
+    'one two three plus' 1fr
+    'zero zero decimal equal' 1fr
+    / 1fr 1fr 1fr 1fr;
+  box-shadow: 0 0 1em rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+input {
+  grid-area: input;
+  background: transparent;
+  border: none;
+  font-family: inherit;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+  font-size: 2.75em;
+  text-align: right;
+  padding: 15% 2% 0 0;
+  color: rgba(66, 75, 84, 1);
+}
+input:focus {
+  outline: none;
+}
+button {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 2em;
+  font-weight: 100;
+  font-family: inherit;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+  color: rgba(66, 75, 84, 1);
+  transition: 200ms;
+}
+button[data-value='0'] {
+  grid-area: zero;
+}
+button[data-value='clear'] {
+  grid-area: clear;
+}
+button[data-value='+'],
+button[data-value='='],
+button[data-value='-'],
+button[data-value='÷'],
+button[data-value='x'] {
+  border-right: none;
+}
+button:hover,
+button:focus {
+  background: rgba(0, 0, 0, 0.1);
+}
+button:focus:not(:focus-visible) {
+  outline: none;
+}
+button:focus {
+  outline: 2px solid rgba(0, 0, 0, 0.5);
+}
+button:active {
+  background: rgba(0, 0, 0, 0.2);
 }
 .circle {
   background: rgba(255, 255, 255, 0.5);
   background: linear-gradient(
     45deg,
-    rgba(255, 255, 255, 0.1) 0%,
-    rgba(255, 255, 255, 0.3) 100%
+    rgba(255, 255, 255, 0.3) 0%,
+    rgba(255, 255, 255, 0.9) 100%
   );
   position: absolute;
   min-width: 10em;

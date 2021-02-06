@@ -4,13 +4,38 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;400;700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="styles/style.css" />
     <script src="scripts/script.js" defer></script>
     <title>Calculator</title>
   </head>
   <body>
     <main>
-      <section class="calculator"></section>
+      <section class="calculator">
+        <input type="text" readonly value="123456.789" />
+        <button type="button" data-value="clear">C</button>
+        <button type="button" data-value="+/-">+/-</button>
+        <button type="button" data-value="÷">÷</button>
+        <button type="button" data-value="7">7</button>
+        <button type="button" data-value="8">8</button>
+        <button type="button" data-value="9">9</button>
+        <button type="button" data-value="x">x</button>
+        <button type="button" data-value="4">4</button>
+        <button type="button" data-value="5">5</button>
+        <button type="button" data-value="6">6</button>
+        <button type="button" data-value="-">-</button>
+        <button type="button" data-value="1">1</button>
+        <button type="button" data-value="2">2</button>
+        <button type="button" data-value="3">3</button>
+        <button type="button" data-value="+">+</button>
+        <button type="button" data-value="0">0</button>
+        <button type="button" data-value=".">.</button>
+        <button type="button" data-value="=">=</button>
+      </section>
       <div class="circle circle1"></div>
       <div class="circle circle2"></div>
       <div class="circle circle3"></div>
