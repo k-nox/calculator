@@ -5,6 +5,11 @@ let currentOperator = null;
 let previousOperator = null;
 const clearButton = document.querySelector('#clear');
 
+// rounds to a certain number of decimal places to avoid common rounding errors
+const round = function roundToDecimal(value, decimalPlaces) {
+  return Number(`${Math.round(`${value}e${decimalPlaces}`)}e-${decimalPlaces}`);
+};
+
 const add = function addNumbers(num1, num2) {
   return num1 + num2;
 };
@@ -19,6 +24,34 @@ const multiply = function multiplyNumbers(num1, num2) {
 
 const divide = function divideNumbers(num1, num2) {
   return num1 / num2;
+};
+
+const checkForRounding = function checkResultLengthForRounding(result) {
+  const resultLength = result.toString().length;
+  const splitResult = result.toString().split('.');
+  let roundedResult = result;
+  // if the result is a floating point & is longer than 9 digits
+  if (resultLength > 10 && /\./.test(result)) {
+    roundedResult = round(result, 9 - splitResult[0].length);
+
+    // if the result is an integer longer than 9 digits
+  } else if (roundedResult.toString().length > 9) {
+    roundedResult = roundedResult.toExponential();
+
+    // if the default exponential rounding is still too long, round to specific length
+    if (roundedResult.length > 10) {
+      const splitExponentialResult = roundedResult.split('e');
+      const firstPartLength = splitExponentialResult[0].length; // before the e
+      const secondPartLength = splitExponentialResult[1].length; // after the e
+
+      // 9 is used in this calc since the e takes 1 of the 10 available characters
+      if (firstPartLength > 9 - secondPartLength) {
+        // 7 is used in this calc since e, 1, and the decimal point take up 3 of the 10 characters
+        roundedResult = (+roundedResult).toExponential(7 - secondPartLength);
+      }
+    }
+  }
+  return roundedResult;
 };
 
 const operate = function performOperation(num1, operator, num2) {
@@ -38,7 +71,7 @@ const operate = function performOperation(num1, operator, num2) {
       break;
     default: // nothing happens
   }
-  currentValue = result;
+  currentValue = checkForRounding(result);
   numberInput.value = currentValue;
   if (currentOperator) {
     previousOperator = currentOperator;
@@ -47,13 +80,18 @@ const operate = function performOperation(num1, operator, num2) {
 };
 
 const updateInput = function updateNumberInput(newValue) {
-  if (currentValue !== '0') {
-    currentValue += newValue;
-  } else {
-    currentValue = newValue;
+  if (
+    currentValue.length < 9 ||
+    (currentValue.length < 10 && /\./.test(currentValue)) // limits number length to 9 digits
+  ) {
+    if (currentValue !== '0') {
+      currentValue += newValue;
+    } else {
+      currentValue = newValue;
+    }
+    numberInput.value = currentValue;
+    clearButton.textContent = 'CE';
   }
-  numberInput.value = currentValue;
-  clearButton.textContent = 'CE';
 };
 
 const storeOperator = function storeOperatorAndValues(operator) {
@@ -133,10 +171,12 @@ const buttonsArray = [
   {
     dataValue: '.',
     action() {
-      currentValue = /\./.test(currentValue)
-        ? currentValue
-        : `${currentValue}.`;
-      numberInput.value = currentValue;
+      if (currentValue.length < 9) {
+        currentValue = /\./.test(currentValue)
+          ? currentValue
+          : `${currentValue}.`;
+        numberInput.value = currentValue;
+      }
     },
   },
   {
