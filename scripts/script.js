@@ -42,6 +42,14 @@ const updateInput = function updateNumberInput(newValue) {
   numberInput.value = currentValue;
 };
 
+const addDecimalPoint = function addDecimalPointToNumberInput() {
+  const containsDecimal = /\./;
+  currentValue = containsDecimal.test(currentValue)
+    ? currentValue
+    : `${currentValue}.`;
+  numberInput.value = currentValue;
+};
+
 const buttonsArray = [
   {
     dataValue: '0',
@@ -105,6 +113,9 @@ const buttonsArray = [
   },
   {
     dataValue: '.',
+    action() {
+      addDecimalPoint();
+    },
   },
   {
     dataValue: '+',
@@ -126,6 +137,9 @@ const buttonsArray = [
   },
   {
     dataValue: 'clear',
+  },
+  {
+    dataValue: '=',
   },
 ];
 
