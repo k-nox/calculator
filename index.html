@@ -11,11 +11,12 @@
     />
     <link rel="stylesheet" href="styles/style.css" />
     <script src="scripts/script.js" defer></script>
+    <script src="scripts/vanilla-tilt.min.js" defer></script>
     <title>Calculator</title>
   </head>
   <body>
     <main>
-      <section class="calculator">
+      <section class="calculator" data-tilt data-tilt-max="10">
         <input type="text" readonly value="0" />
         <button type="button" data-value="clear" id="clear">AC</button>
         <button type="button" data-value="+/-">+/-</button>
