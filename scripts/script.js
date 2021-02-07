@@ -1,3 +1,10 @@
+const numberInput = document.querySelector('input');
+let currentValue = numberInput.value;
+let previousValue = null;
+let currentOperator = null;
+let previousOperator = null;
+const clearButton = document.querySelector('#clear');
+
 const add = function addNumbers(num1, num2) {
   return num1 + num2;
 };
@@ -26,28 +33,40 @@ const operate = function performOperation(num1, operator, num2) {
     case '*':
       result = multiply(num1, num2);
       break;
-    case '/':
+    case '÷':
       result = divide(num1, num2);
       break;
     default: // nothing happens
   }
-  return result;
+  currentValue = result;
+  numberInput.value = currentValue;
+  if (currentOperator) {
+    previousOperator = currentOperator;
+  }
+  currentOperator = null;
 };
-
-const numberInput = document.querySelector('input');
-let currentValue = numberInput.value;
 
 const updateInput = function updateNumberInput(newValue) {
-  currentValue = currentValue !== '0' ? currentValue + newValue : newValue;
+  if (currentValue !== '0') {
+    currentValue += newValue;
+  } else {
+    currentValue = newValue;
+  }
   numberInput.value = currentValue;
+  clearButton.textContent = 'CE';
 };
 
-const addDecimalPoint = function addDecimalPointToNumberInput() {
-  const containsDecimal = /\./;
-  currentValue = containsDecimal.test(currentValue)
-    ? currentValue
-    : `${currentValue}.`;
-  numberInput.value = currentValue;
+const storeOperator = function storeOperatorAndValues(operator) {
+  if (!currentOperator) {
+    previousValue = currentValue;
+    currentOperator = operator;
+    currentValue = '0';
+  } else {
+    operate(+previousValue, currentOperator, +currentValue);
+    previousValue = currentValue;
+    currentOperator = operator;
+    currentValue = '0';
+  }
 };
 
 const buttonsArray = [
@@ -114,32 +133,76 @@ const buttonsArray = [
   {
     dataValue: '.',
     action() {
-      addDecimalPoint();
+      currentValue = /\./.test(currentValue)
+        ? currentValue
+        : `${currentValue}.`;
+      numberInput.value = currentValue;
     },
   },
   {
     dataValue: '+',
+    action() {
+      storeOperator(this.dataValue);
+    },
   },
   {
     dataValue: '-',
+    action() {
+      storeOperator(this.dataValue);
+    },
   },
   {
     dataValue: '÷',
+    action() {
+      storeOperator(this.dataValue);
+    },
   },
   {
     dataValue: '*',
-  },
-  {
-    dataValue: '/',
-  },
-  {
-    dataValue: '+/-',
-  },
-  {
-    dataValue: 'clear',
+    action() {
+      storeOperator(this.dataValue);
+    },
   },
   {
     dataValue: '=',
+    action() {
+      if (currentValue === '0' && currentOperator === '÷') {
+        numberInput.value = 'nope';
+      } else if (previousValue) {
+        if (currentOperator) {
+          operate(+previousValue, currentOperator, +currentValue);
+        } else {
+          operate(+previousValue, previousOperator, currentValue);
+        }
+      }
+    },
+  },
+  {
+    dataValue: '+/-',
+    action() {
+      if (/^-/.test(currentValue)) {
+        currentValue = currentValue.slice(1);
+        numberInput.value = currentValue;
+      } else {
+        currentValue = `-${currentValue}`;
+        numberInput.value = currentValue;
+      }
+    },
+  },
+  {
+    dataValue: 'clear',
+    action() {
+      if (clearButton.textContent === 'AC') {
+        currentValue = '0';
+        previousValue = null;
+        currentOperator = null;
+        numberInput.value = currentValue;
+      } else {
+        currentValue = '0';
+        numberInput.value = currentValue;
+        clearButton.textContent = 'AC';
+      }
+    },
   },
 ];
 
