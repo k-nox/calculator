@@ -77,13 +77,6 @@ button[data-value='0'] {
 button[data-value='clear'] {
   grid-area: clear;
 }
-button[data-value='+'],
-button[data-value='='],
-button[data-value='-'],
-button[data-value='÷'],
-button[data-value='x'] {
-  border-right: none;
-}
 button:hover,
 button:focus {
   background: rgba(0, 0, 0, 0.1);

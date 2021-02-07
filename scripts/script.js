@@ -66,7 +66,7 @@ const operate = function performOperation(num1, operator, num2) {
     case '*':
       result = multiply(num1, num2);
       break;
-    case '÷':
+    case '/':
       result = divide(num1, num2);
       break;
     default: // nothing happens
@@ -192,7 +192,7 @@ const buttonsArray = [
     },
   },
   {
-    dataValue: '÷',
+    dataValue: '/',
     action() {
       storeOperator(this.dataValue);
     },
@@ -206,7 +206,7 @@ const buttonsArray = [
   {
     dataValue: '=',
     action() {
-      if (currentValue === '0' && currentOperator === '÷') {
+      if (currentValue === '0' && currentOperator === '/') {
         numberInput.value = 'nope';
       } else if (previousValue) {
         if (currentOperator) {
@@ -255,3 +255,18 @@ document.querySelectorAll('button').forEach((btn) =>
     });
   })
 );
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Backspace') {
+    document.querySelector('button[data-value="clear"]').focus();
+    buttonsArray[17].action();
+  } else {
+    buttonsArray.forEach((button) => {
+      if (button.dataValue === e.key) {
+        document
+          .querySelector(`button[data-value='${button.dataValue}']`)
+          .focus();
+        button.action();
+      }
+    });
+  }
+});
